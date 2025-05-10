@@ -16,6 +16,16 @@ class Database {
     this.users.push(newUser);
     return newUser;
   }
+
+  getUserById(id: string): User | undefined {
+    return this.users.find((user) => user.id === id);
+  }
+
+  deleteUser(id: string): User | undefined {
+    const deleted = this.users.find((user) => user.id === id);
+    this.users = this.users.filter((user) => user.id !== id);
+    return deleted;
+  }
 }
 
 export const database = new Database();

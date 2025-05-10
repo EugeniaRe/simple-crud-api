@@ -1,3 +1,4 @@
+import { validate as uuidValidate } from "uuid";
 import { database } from "./database";
 import { RequestData } from "./types";
 
@@ -52,6 +53,67 @@ export const addUser = (req: RequestData) => {
     return {
       statusCode: 201,
       body: newUser,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: { error: "Internal server error" },
+    };
+  }
+};
+
+export const getUserById = (req: RequestData) => {
+  try {
+    const userId = req.params?.id;
+
+    if (!userId || !uuidValidate(userId)) {
+      return {
+        statusCode: 400,
+        body: { error: "Invalid user ID" },
+      };
+    }
+
+    const user = database.getUserById(userId);
+    if (!user) {
+      return {
+        statusCode: 404,
+        body: { error: "User not found" },
+      };
+    }
+
+    return {
+      statusCode: 200,
+      body: user,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: { error: "Internal server error" },
+    };
+  }
+};
+
+export const deleteUser = (req: RequestData) => {
+  try {
+    const userId = req.params?.id;
+
+    if (!userId || !uuidValidate(userId)) {
+      return {
+        statusCode: 400,
+        body: { error: "Invalid user ID" },
+      };
+    }
+
+    const deleted = database.deleteUser(userId);
+    if (!deleted) {
+      return {
+        statusCode: 404,
+        body: { error: "User not found" },
+      };
+    }
+
+    return {
+      statusCode: 204,
     };
   } catch (error) {
     return {
