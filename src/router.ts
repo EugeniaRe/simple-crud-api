@@ -1,6 +1,12 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { APIResponse, RequestData, User } from "./types";
-import { addUser, deleteUser, getUserById, getUsers } from "./controllers";
+import {
+  addUser,
+  deleteUser,
+  getUserById,
+  getUsers,
+  updateUser,
+} from "./controllers";
 
 export const router = async (req: IncomingMessage, res: ServerResponse) => {
   const requestData = await parseRequest(req);
@@ -15,6 +21,8 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
       response = getUserById(requestData);
     } else if (req.url?.startsWith("/api/users/") && req.method === "DELETE") {
       response = deleteUser(requestData);
+    } else if (req.url?.startsWith("/api/users/") && req.method === "PUT") {
+      response = updateUser(requestData);
     } else {
       response = {
         statusCode: 404,

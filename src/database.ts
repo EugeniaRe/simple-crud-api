@@ -26,6 +26,17 @@ class Database {
     this.users = this.users.filter((user) => user.id !== id);
     return deleted;
   }
+
+  updateUser(id: string, userData: UserWithoutId): User | undefined {
+    const index = this.users.findIndex((user) => user.id === id);
+    if (index === -1) {
+      return undefined;
+    }
+
+    this.users[index] = { id, ...userData };
+
+    return this.users[index];
+  }
 }
 
 export const database = new Database();
