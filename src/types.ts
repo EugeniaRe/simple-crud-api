@@ -7,7 +7,7 @@ export interface User {
 
 export interface APIResponse {
   statusCode: number;
-  body?: any;
+  body?: unknown;
   headers?: Record<string, string>;
 }
 

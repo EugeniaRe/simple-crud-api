@@ -39,7 +39,7 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
   sendResponse(res, response);
 };
 
-function sendResponse(res: ServerResponse, apiResponse: APIResponse) {
+export function sendResponse(res: ServerResponse, apiResponse: APIResponse) {
   res.statusCode = apiResponse.statusCode;
   res.setHeader("Content-Type", "application/json");
 
@@ -56,7 +56,7 @@ function sendResponse(res: ServerResponse, apiResponse: APIResponse) {
   }
 }
 
-async function parseRequest(req: IncomingMessage) {
+export async function parseRequest(req: IncomingMessage) {
   const url = new URL(req.url || "", `http://${req.headers.host}`);
   const pathParts = url.pathname.split("/").filter(Boolean);
 
@@ -74,7 +74,7 @@ async function parseRequest(req: IncomingMessage) {
   return requestData;
 }
 
-function parseBody(req: IncomingMessage): Promise<User | undefined> {
+export function parseBody(req: IncomingMessage): Promise<User | undefined> {
   return new Promise((resolve) => {
     let body = "";
     req.on("data", (chunk) => {
