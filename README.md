@@ -15,6 +15,10 @@ Go to the project folder:
 
 `cd simple-crud-api`
 
+Switch to the develop branch:
+
+`git checkout develop`
+
 Install dependencies:
 
 `npm install`
